@@ -1,9 +1,12 @@
 ﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using Tuto_01.Database;
 using Tuto_01.Models;
 
 namespace Tuto_01.Features
@@ -14,9 +17,12 @@ namespace Tuto_01.Features
 
         private SqlConnection _connetion;
 
+        private AppDbContext _db;
+
         public Customers()
         {
             _connetion = new SqlConnection(this._databaseStr);
+            _db = new AppDbContext();
         }
 
         public void GetAll()
@@ -58,6 +64,12 @@ namespace Tuto_01.Features
                 Console.WriteLine(res >= 1 ? "Create success" : "Create Fail");
                 _db.Close();
             }
+        }
+
+        public void GetOne()
+        {
+            var customer =_db.Customers.AsNoTracking().OrderByDescending(c=>c.score).Take(1).ToList().FirstOrDefault();
+            Console.WriteLine($"Customer Name  {customer!.first_name } and  score {customer.score}");
         }
     }
 }

@@ -8,6 +8,8 @@ Order order = new Order();
 
 //customer.Create("Jojo","Myanmar",120);
 //customer.GetAll();
+//order.GetAllOrders();
 
 
-order.GetAllOrders();
+customer.GetOne();
+
